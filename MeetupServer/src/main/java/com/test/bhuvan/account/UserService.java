@@ -16,10 +16,15 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private AccountRepository accountRepository;
 	
-	@PostConstruct	
+	@PostConstruct
 	protected void initialize() {
+<<<<<<< Updated upstream
 	//	accountRepository.save(new Account("user", "demo", "ROLE_USER"));
 	//	accountRepository.save(new Account("admin", "admin", "ROLE_ADMIN"));
+=======
+//		accountRepository.save(new Account("user", "demo", "ROLE_USER"));
+//		accountRepository.save(new Account("admin", "admin", "ROLE_ADMIN"));
+>>>>>>> Stashed changes
 	}
 	
 	@Override

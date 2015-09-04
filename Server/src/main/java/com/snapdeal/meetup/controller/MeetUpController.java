@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< Updated upstream
 import com.snapdeal.meetup.entity.Event;
 import com.snapdeal.meetup.entity.User;
 import com.snapdeal.meetup.entity.UserEvent;
@@ -44,6 +45,19 @@ public class MeetUpController {
 	public void addUserEvents(@RequestParam ("userEvent") UserEvent userEvent) {
 		 service.addUserEvent(userEvent);
 	}
+=======
+@RestController
+public class MeetUpController {
+
+//	@Autowired
+//	MeetUpService mus;
+//
+//	@RequestMapping(value="/admin/saveEvent", method = RequestMethod.GET)
+//	public String saveEvent() {
+//		return mus.meetupServiceExample();
+//	}
+//
+>>>>>>> Stashed changes
 	
 	@RequestMapping(value="/admin/addUser/{user}",method = RequestMethod.GET) 
 	public void addUser(@RequestParam ("user") User user) {

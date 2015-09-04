@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:whatever="http://schemas.android.com/apk/res-auto"
+    xmlns:googleplace="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="287dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:hint="Meet Up Name"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        android:layout_marginTop="61dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <co.geeksters.googleplaceautocomplete.lib.CustomAutoCompleteTextView
+            android:id="@+id/atv_places"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:hint="rechere ici"
+            googleplace:key="AIzaSyA1X6HQ5--0RXGIiXFMfU1Q9fZxoPaftrY"
+            googleplace:type="(cities)"
+            googleplace:sensor="false"/>
 
-    <EditText
-        android:layout_width="287dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:hint="Location"
-        android:textSize="30dp"
+        <!--<co.geeksters.googleplaceautocomplete.lib.CustomAutoCompleteTextView-->
+            <!--android:id="@+id/atv_places"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:hint="rechere ici"-->
+            <!--googleplace:key="AIzaSyA1X6HQ5&#45;&#45;0RXGIiXFMfU1Q9fZxoPaftrY"-->
+            <!--googleplace:type="(cities)"-->
+            <!--googleplace:sensor="false"/>-->
 
-        android:textAlignment="center"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        <EditText
+            android:layout_width="287dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:hint="Meet Up Name"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:layout_marginTop="61dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timePicker"
-        android:layout_below="@+id/editText2"
-        android:layout_alignStart="@+id/editText2" />
+        <EditText
+            android:layout_width="287dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:hint="Location"
+            android:textSize="30dp"
 
-</RelativeLayout>
+            android:textAlignment="center"
+            android:layout_below="@+id/editText"
+            android:layout_alignStart="@+id/editText" />
+
+        <TimePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timePicker"
+            android:layout_below="@+id/editText2"
+            android:layout_alignStart="@+id/editText2" />
+
+    </RelativeLayout>
+
+</LinearLayout>

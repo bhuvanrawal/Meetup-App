@@ -5,12 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import co.geeksters.googleplaceautocomplete.lib.CustomAutoCompleteTextView;
+
 
 public class CreateEvent extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CustomAutoCompleteTextView customAutoCompleteTextView = (CustomAutoCompleteTextView)findViewById(R.id.atv_places);
+
+        if (customAutoCompleteTextView != null && customAutoCompleteTextView.googlePlace != null) {
+
+            customAutoCompleteTextView.googlePlace.getCountry(); //Return the country name
+            customAutoCompleteTextView.googlePlace.getCity(); //Return the city
+            customAutoCompleteTextView.googlePlace.getDescription(); //Return the description (city + region + country)
+        }
+
         setContentView(R.layout.createevent);
     }
 
