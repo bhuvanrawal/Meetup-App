@@ -96,9 +96,13 @@ public class GoogleLocationsService {
         int i=0;
         for (RowElement rowElement : distanceMatrixResponse.getRows()) {
             DistanceMatrices dis = new DistanceMatrices();
+            dis.setFound(false);
             ElementElement element = (rowElement.getElements())[i++];
-            dis.setDistance(element.getDistance().getText());
-            dis.setTime(element.getDuration().getText());
+            if (element.getStatus().equals("OK")) {
+                dis.setDistance(element.getDistance().getText());
+                dis.setTime(element.getDuration().getText());
+                dis.setFound(true);
+            }
             distanceMatrices.add(dis);
         }
         return distanceMatrices;
