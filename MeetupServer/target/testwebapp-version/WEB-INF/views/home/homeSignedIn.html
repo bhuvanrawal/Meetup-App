@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title th:text="#{view.index.title}">Welcome!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -9,53 +10,79 @@
 
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link href="../../../resources/css/agency.css" rel="stylesheet" media="screen" th:href="@{/resources/css/agency.css}"/>
+
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
+<style>
+    header {
+        text-align: center;
+        color: #fff;
+        width:1400px;
+        background-attachment: scroll;
+        background-image: url(resources/images/header-bg.jpg);
+        background-position: center center;
+        background-repeat: none;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+</style>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <ul class="nav navbar-nav side-nav">
     <li>
-        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Add an Event</a>
     </li>
     <li>
-        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Friends</a>
     </li>
     <li>
-        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Past Events</a>
     </li>
-    <li>
-        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-    </li>
-    <li>
-        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-    </li>
-    <li class="active">
-        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-    </li>
-    <li>
-        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-        <ul id="demo" class="collapse">
-            <li>
-                <a href="#">Dropdown Item</a>
-            </li>
-            <li>
-                <a href="#">Dropdown Item</a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-    </li>
-    <li>
-        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-    </li>
+    <!--<li>-->
+    <!--<a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>-->
+    <!--</li>-->
+    <!--<li class="active">-->
+    <!--<a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>-->
+    <!--<ul id="demo" class="collapse">-->
+    <!--<li>-->
+    <!--<a href="#">Dropdown Item</a>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a href="#">Dropdown Item</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>-->
+    <!--</li>-->
+    <!--<li>-->
+    <!--<a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>-->
+    <!--</li>-->
 </ul>
-<div class="container">
+<div class="container" style="padding-left:9.5%; margin-top:-60px">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
+    <header>
+        <div class="container">
+            <div class="intro-text" style="margin-left:-200px;margin-top:-100px">
+                <div class="intro-lead-in">Welcome To Meetup!</div>
+                <div class="intro-heading">It's Nice To Meet You</div>
+                <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
+            </div>
+        </div>
+    </header>
     <p>
         Welcome to the Spring MVC Quickstart application!
     </p>
