@@ -4,6 +4,7 @@
 Base logback configuration provided for compatibility with Spring Boot 1.1
 -->
 <configuration>
+<included>
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 	<property name="LOG_FILE" value="${catalina.base}/logs/server.log"/>
 	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
@@ -12,5 +13,6 @@ Base logback configuration provided for compatibility with Spring Boot 1.1
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE" />
 	</root>
-	<logger name="com.meetup" level="DEBUG"/>
+	<logger name="com" level="DEBUG"/>
+</included>
 </configuration>
