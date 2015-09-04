@@ -6,27 +6,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public class mySqlAccess {
+import javax.annotation.PostConstruct;
+
+import com.snapdeal.meetup.entity.Event;
+import com.snapdeal.meetup.entity.User;
+
+public class MySqlAccess {
 
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
+	
+	@PostConstruct
+	public void init() throws ClassNotFoundException, SQLException {
+	// This will load the MySQL driver, each DB has its own driver
+		Class.forName("com.mysql.jdbc.Driver");
+		// Setup the connection with the DB
+		connect = DriverManager
+		.getConnection("jdbc:mysql://localhost:3306/meeting_app?"
+					+ "user=root&password=root");
+
+		// Statements allow to issue SQL queries to the database
+		statement = connect.createStatement();
+	}
 
 	public void readDataBase() throws Exception {
 		try {
-			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
-			// Setup the connection with the DB
-			connect = DriverManager
-					.getConnection("jdbc:mysql://localhost:3306/meeting_app?"
-							+ "user=root&password=root");
-
-			// Statements allow to issue SQL queries to the database
-			statement = connect.createStatement();
-			// Result set get the result of the SQL query
-			resultSet = statement
+					resultSet = statement
 					.executeQuery("select * from meeting_app.user");
 			writeResultSet(resultSet);
 
@@ -82,8 +92,64 @@ public class mySqlAccess {
 
 
 	public static void main(String[] args) throws Exception {
-		mySqlAccess dao = new mySqlAccess();
+		MySqlAccess dao = new MySqlAccess();
 		dao.readDataBase();
 	}
+	
+	public List<User> getAllUsers() {
+		try {
+			preparedStatement = connect
+					.prepareStatement("select * from meeting_app.user");
+
+			resultSet = preparedStatement.executeQuery();
+
+			List<User> userList = new ArrayList<User>();
+			while (resultSet.next()) {
+				User user = new User();
+				Integer id = resultSet.getInt("id");
+				user.setId(id);
+				String name = resultSet.getString("name");
+				user.setName(name);
+				String emailId = resultSet.getString("email_id");
+				user.setEmail_id(emailId);
+				userList.add(user);
+				return userList;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+				}
+		return null;
+	}
+
+	public List<Event> getAllEvents() {
+		try {
+			preparedStatement = connect
+					.prepareStatement("select * from meeting_app.event");
+
+			resultSet = preparedStatement.executeQuery();
+
+			List<Event> eventList = new ArrayList<Event>();
+			while (resultSet.next()) {
+				Event event = new Event();
+				Integer id = resultSet.getInt("id");
+				event.setId(id);
+				String name = resultSet.getString("name");
+				event.setName(name);
+				String destination = resultSet.getString("destination");
+				event.setDestination(destination);
+				String arrivalTime = resultSet.getString("time_to_reach");
+				event.setArrival_time(arrivalTime);
+				eventList.add(event);
+				return eventList;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+				}
+		return null;
+	}
+
+
 }
 
