@@ -41,5 +41,11 @@ public class Event {
 	public void setArrival_time(String arrival_time) {
 		this.arrival_time = arrival_time;
 	}
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", name=" + name + ", destination="
+				+ destination + ", arrival_time=" + arrival_time + "]";
+	}
 	
 }

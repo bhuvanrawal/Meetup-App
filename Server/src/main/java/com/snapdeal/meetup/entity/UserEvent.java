@@ -6,6 +6,10 @@ public class UserEvent {
 	
 	private String userName;
 	
+	private Integer userId;
+	
+	private Integer eventId;
+	
 	private String eventName;
 	
 	private String currentLocation;
@@ -51,5 +55,28 @@ public class UserEvent {
 	public void setRemainingTime(String remainingTime) {
 		this.remainingTime = remainingTime;
 	}
-	
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(Integer eventId) {
+		this.eventId = eventId;
+	}
+
+	@Override
+	public String toString() {
+		return "UserEvent [id=" + id + ", userName=" + userName + ", userId="
+				+ userId + ", eventId=" + eventId + ", eventName=" + eventName
+				+ ", currentLocation=" + currentLocation + ", remainingTime="
+				+ remainingTime + "]";
+	}
 }
