@@ -1,7 +1,10 @@
 package com.snapdeal.springmvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.snapdeal.springmvc.autocomplete.LocationDetails;
+import com.snapdeal.springmvc.service.GoogleLocationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,9 +26,24 @@ public class HelloWorldRestController {
 	@Autowired
 	UserService userService;  //Service which will do all data retrieval/manipulation work
 
-	
-	//-------------------Retrieve All Users--------------------------------------------------------
-	
+	@Autowired
+	GoogleLocationsService googleLocationsService;
+
+	//-------------------Get Locations -------------------------------------
+	@RequestMapping(value = "/getSuggestedLocations/{locationString}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<LocationDetails> getLocations (@PathVariable("locationString") String placeSubString) throws Exception {
+
+		List<LocationDetails> locations = new ArrayList<>();
+		try {
+			locations = googleLocationsService.getLocations(placeSubString);
+		} catch (Exception e) {
+			System.out.println("Exception in getlOCATIONS. E: " + e.getMessage());
+		}
+		return locations;
+	}
+		//-------------------Retrieve All Users--------------------------------------------------------
+
+
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> listAllUsers() {
 		List<User> users = userService.findAllUsers();
@@ -117,5 +135,6 @@ public class HelloWorldRestController {
 		userService.deleteAllUsers();
 		return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 	}
+
 
 }

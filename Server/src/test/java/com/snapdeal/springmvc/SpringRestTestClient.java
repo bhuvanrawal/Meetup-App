@@ -4,14 +4,25 @@ import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.snapdeal.springmvc.autocomplete.LocationDetails;
 import org.springframework.web.client.RestTemplate;
 
 import com.snapdeal.springmvc.model.User;
 
 public class SpringRestTestClient {
 
-	public static final String REST_SERVICE_URI = "http://localhost:8080/Spring4MVCCRUDRestService";
-	
+	public static final String REST_SERVICE_URI = "http://localhost:8080/meetatlocation";
+
+	private static void getSuggestedLocations(){
+
+		System.out.println("Testing getSuggestedLocations API-----------");
+		RestTemplate restTemplate = new RestTemplate();
+		List<LocationDetails> locations = restTemplate.getForObject(REST_SERVICE_URI+"/getSuggestedLocations/India", List.class);
+		for (LocationDetails l : locations) {
+			System.out.println(l.getLocationDes());
+		}
+	}
+
 	/* GET */
 	@SuppressWarnings("unchecked")
 	private static void listAllUsers(){
@@ -71,6 +82,7 @@ public class SpringRestTestClient {
     }
 
     public static void main(String args[]){
+		getSuggestedLocations();
 		listAllUsers();
 		getUser();
 		createUser();
