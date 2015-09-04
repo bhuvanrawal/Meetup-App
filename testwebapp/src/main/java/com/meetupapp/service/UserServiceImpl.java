@@ -1,6 +1,6 @@
 package com.meetupapp.service;
 
-import com.snapdeal.springmvc.model.User;
+import com.meetupapp.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	public void saveUser(User user) {
-		user.setId(counter.incrementAndGet());
+		user.setId((int)counter.incrementAndGet());
 		users.add(user);
 	}
 
@@ -69,10 +69,10 @@ public class UserServiceImpl implements UserService{
 
 	private static List<User> populateDummyUsers(){
 		List<User> users = new ArrayList<User>();
-		users.add(new User(counter.incrementAndGet(),"Sam",30, 70000));
-		users.add(new User(counter.incrementAndGet(),"Tom",40, 50000));
-		users.add(new User(counter.incrementAndGet(),"Jerome",45, 30000));
-		users.add(new User(counter.incrementAndGet(),"Silvia",50, 40000));
+		users.add(new User((int)counter.incrementAndGet(),"Sam","sam"));
+		users.add(new User((int)counter.incrementAndGet(),"Tom","tom"));
+		users.add(new User((int)counter.incrementAndGet(),"Jerome","jerome"));
+		users.add(new User((int)counter.incrementAndGet(),"Silvia","silvia"));
 		return users;
 	}
 

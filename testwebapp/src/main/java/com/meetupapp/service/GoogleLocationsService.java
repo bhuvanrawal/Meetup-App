@@ -1,13 +1,13 @@
 package com.meetupapp.service;
 
-import com.snapdeal.springmvc.map.api.autocomplete.AutoCompleteResponse;
-import com.snapdeal.springmvc.map.api.autocomplete.LocationDetails;
-import com.snapdeal.springmvc.map.api.autocomplete.PredictionElement;
-import com.snapdeal.springmvc.map.api.distanceMatrix.DistanceMatrices;
-import com.snapdeal.springmvc.map.api.distanceMatrix.DistanceMatrixResponse;
-import com.snapdeal.springmvc.map.api.distanceMatrix.ElementElement;
-import com.snapdeal.springmvc.map.api.distanceMatrix.RowElement;
-import com.snapdeal.springmvc.utils.Utility;
+import com.meetupapp.api.autocomplete.AutoCompleteResponse;
+import com.meetupapp.api.autocomplete.LocationDetails;
+import com.meetupapp.api.autocomplete.PredictionElement;
+import com.meetupapp.api.distanceMatrix.DistanceMatrices;
+import com.meetupapp.api.distanceMatrix.DistanceMatrixResponse;
+import com.meetupapp.api.distanceMatrix.ElementElement;
+import com.meetupapp.api.distanceMatrix.RowElement;
+import com.meetupapp.utils.Utility;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Service;
 

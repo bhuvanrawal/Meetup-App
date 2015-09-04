@@ -1,6 +1,7 @@
 package com.meetupapp.service;
 
-import com.snapdeal.springmvc.model.User;
+
+import com.meetupapp.entity.User;
 
 import java.util.List;
 

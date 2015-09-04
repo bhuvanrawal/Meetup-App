@@ -3,7 +3,17 @@ package com.meetupapp.entity;
 public class User {
 
 	private Integer id;
-	
+
+	public User(){
+
+	}
+
+	public User(Integer id, String name, String email_id) {
+		this.id = id;
+		this.name = name;
+		this.email_id = email_id;
+	}
+
 	private String name;
 	
 	private String email_id;

@@ -1,7 +1,7 @@
 package com.meetupapp.service;
 
-import com.snapdeal.meetup.entity.Event;
-import com.snapdeal.meetup.entity.User;
+import com.meetupapp.entity.Event;
+import com.meetupapp.entity.User;
 
 import javax.annotation.PostConstruct;
 import java.sql.*;
