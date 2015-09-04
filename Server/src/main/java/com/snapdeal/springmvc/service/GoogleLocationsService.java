@@ -1,16 +1,23 @@
 package com.snapdeal.springmvc.service;
 
-import com.snapdeal.springmvc.autocomplete.AutoCompleteResponse;
-import com.snapdeal.springmvc.autocomplete.LocationDetails;
-import com.snapdeal.springmvc.autocomplete.PredictionElement;
+import com.snapdeal.springmvc.map.api.autocomplete.AutoCompleteResponse;
+import com.snapdeal.springmvc.map.api.autocomplete.LocationDetails;
+import com.snapdeal.springmvc.map.api.autocomplete.PredictionElement;
+import com.snapdeal.springmvc.map.api.distanceMatrix.DistanceMatrices;
+import com.snapdeal.springmvc.map.api.distanceMatrix.DistanceMatrixResponse;
+import com.snapdeal.springmvc.map.api.distanceMatrix.ElementElement;
+import com.snapdeal.springmvc.map.api.distanceMatrix.RowElement;
+import com.snapdeal.springmvc.utils.Utility;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import javax.rmi.CORBA.Util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,69 +28,34 @@ import java.util.List;
 public class GoogleLocationsService {
 
 
-    private String baseUrl = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
-    private URL url;
-    private HttpURLConnection conn = null;
+    private static final String AUTO_COMPLETE_BASE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?";
+    private static final String DISTANCE_MATRIX_BASE_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
 
 
     public List<LocationDetails> getLocations (String placeSubString) throws Exception {
 
-        try {
 
-            url = new URL(baseUrl+ URLEncoder.encode(placeSubString,"UTF-8")+"&types=establishment&key=AIzaSyA1X6HQ5--0RXGIiXFMfU1Q9fZxoPaftrY");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            conn = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            conn.setRequestMethod("GET");
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        }
-        conn.setRequestProperty("Accept", "application/json");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("input", placeSubString);
+        params.put("types", "establishment");
+        params.put("key", Utility.GOOGLE_API_KEY);
 
-        conn.setRequestProperty("input", placeSubString);
-        try {
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //Get url
+        String url = Utility.getUrl(AUTO_COMPLETE_BASE_URL, params);
 
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Http url : " + url);
 
-        String output;
-        String locationsJSON = "";
-        System.out.println("Output from Server....\n");
-        try {
-            while ((output = br.readLine()) != null) {
-                //System.out.println(output);
-                locationsJSON += output;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //Get Response
+        String locationsJSON = Utility.getURLResponse(url);
 
-        String a = ";";
-        AutoCompleteResponse sugestedPlaces = new AutoCompleteResponse();
+        //Get Object from json
+        AutoCompleteResponse suggestedPlaces = new AutoCompleteResponse();
         ObjectMapper mapper = new ObjectMapper();
-        sugestedPlaces = mapper.readValue(locationsJSON, AutoCompleteResponse.class);
+        suggestedPlaces = mapper.readValue(locationsJSON, AutoCompleteResponse.class);
 
         List<LocationDetails> locations = new ArrayList<LocationDetails>();
-        if (sugestedPlaces != null) {
-            for (PredictionElement place : sugestedPlaces.getPredictions()) {
+        if (suggestedPlaces != null) {
+            for (PredictionElement place : suggestedPlaces.getPredictions()) {
                 LocationDetails location = new LocationDetails();
                 location.setLocationDes(place.getDescription());
                 location.setLocationId(place.getId());
@@ -93,4 +65,44 @@ public class GoogleLocationsService {
         }
         return locations;
     }
+
+
+    public List<DistanceMatrices> getDistanceMatrices (List<String> sources, List<String> dests) throws Exception {
+
+        String origins="";
+        String destinations = "";
+        for (int i=0; i<sources.size() ; i++) {
+            origins += sources.get(i) + "|";
+            destinations += dests.get(i) + "|";
+        }
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("origins", origins);
+        params.put("destinations", destinations);
+        params.put("key", Utility.GOOGLE_API_KEY);
+
+        //Get url
+        String url = Utility.getUrl(DISTANCE_MATRIX_BASE_URL, params);
+
+        //Get Response
+        String distanceJSON = Utility.getURLResponse(url);
+
+        //Get Object from json
+        DistanceMatrixResponse distanceMatrixResponse = new DistanceMatrixResponse();
+        ObjectMapper mapper = new ObjectMapper();
+        distanceMatrixResponse = mapper.readValue(distanceJSON, DistanceMatrixResponse.class);
+
+        List<DistanceMatrices> distanceMatrices = new ArrayList<>();
+        int i=0;
+        for (RowElement rowElement : distanceMatrixResponse.getRows()) {
+            DistanceMatrices dis = new DistanceMatrices();
+            ElementElement element = (rowElement.getElements())[i++];
+            dis.setDistance(element.getDistance().getText());
+            dis.setTime(element.getDuration().getText());
+            distanceMatrices.add(dis);
+        }
+        return distanceMatrices;
+    }
+
+
 }

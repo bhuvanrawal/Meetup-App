@@ -3,7 +3,9 @@ package com.snapdeal.springmvc.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.snapdeal.springmvc.autocomplete.LocationDetails;
+import com.snapdeal.springmvc.map.api.autocomplete.LocationDetails;
+import com.snapdeal.springmvc.map.api.distanceMatrix.DistanceMatrices;
+import com.snapdeal.springmvc.map.api.distanceMatrix.DistanceMatrixRequest;
 import com.snapdeal.springmvc.service.GoogleLocationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.snapdeal.springmvc.model.User;
@@ -37,11 +40,27 @@ public class HelloWorldRestController {
 		try {
 			locations = googleLocationsService.getLocations(placeSubString);
 		} catch (Exception e) {
-			System.out.println("Exception in getlOCATIONS. E: " + e.getMessage());
+			System.out.println("Exception in getLocations. Exception: " + e.getMessage());
 		}
 		return locations;
 	}
-		//-------------------Retrieve All Users--------------------------------------------------------
+
+
+	//-------------------Get Locations -------------------------------------
+	@RequestMapping(value = "/getDistanceMatrices/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<DistanceMatrices> getDistanceMatrices (@RequestBody DistanceMatrixRequest request) throws Exception {
+
+		List<DistanceMatrices> matrices = new ArrayList<>();
+		try {
+			matrices = googleLocationsService.getDistanceMatrices(request.getOrigins(), request.getDestinations());
+		} catch (Exception e) {
+			System.out.println("Exception in getDistanceMatrices. Exception: " + e.getMessage());
+		}
+		return matrices;
+	}
+
+
+	//-------------------Retrieve All Users--------------------------------------------------------
 
 
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
@@ -134,6 +153,22 @@ public class HelloWorldRestController {
 
 		userService.deleteAllUsers();
 		return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+	}
+
+	public static void main (String []args) throws Exception {
+
+		DistanceMatrixRequest request = new DistanceMatrixRequest();
+		request.getOrigins().add("Kingdom of Dreams, Gurgaon, Haryana, India");
+		request.getOrigins().add("Kingdom of Dreams, Gurgaon, Haryana, India");
+		request.getDestinations().add("Cox and Kings, Gurgaon, Haryana, India");
+		request.getDestinations().add("Kingston Service Center, New Delhi, India");
+
+		HelloWorldRestController c = new HelloWorldRestController();
+		List<DistanceMatrices> destanceMatrices = c.getDistanceMatrices(request);
+		for (DistanceMatrices dis : destanceMatrices) {
+			System.out.println("Distance is: " + dis.getDistance() + "and time taken will be: " + dis.getTime());
+		}
+
 	}
 
 

@@ -1,4 +1,4 @@
-package com.snapdeal.springmvc.autocomplete;
+package com.snapdeal.springmvc.map.api.autocomplete;
 
 /**
  * Created by amit on 4/9/15.
